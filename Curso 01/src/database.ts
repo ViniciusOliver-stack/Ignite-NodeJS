@@ -5,10 +5,13 @@ import { env } from "./env"
 dotenv.config()
 
 export const config = {
-  client: "sqlite",
-  connection: {
-    filename: env.DATABASE_URL,
-  },
+  client: env.DATABASE_CLIENT,
+  connection:
+    env.DATABASE_CLIENT === "sqlite"
+      ? {
+          filename: env.DATABASE_URL,
+        }
+      : env.DATABASE_URL,
   useNullAsDefault: true,
   migrations: {
     directory: "./db/migrations",
